@@ -49,8 +49,6 @@ app.use("/", (req, res) =>
   res.status(200).json({ success: true, msg: "server is running" })
 );
 
-// Serve static files from the frontend directory
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
 // Handle all other routes with the frontend's index.html file
 app.get("*", (req, res) => {

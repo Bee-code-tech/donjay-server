@@ -7,9 +7,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["https://chat-and-fourm.netlify.app", 
-    "http://localhost:3000", 
-    "https://mern-chat-frontend-azure.vercel.app"],
+    origin: [ 
+    "http://localhost:3000",],
     methods: ["GET", "POST"],
   },
 });
