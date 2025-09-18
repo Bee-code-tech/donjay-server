@@ -1,0 +1,64 @@
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
+import morgan from "morgan";
+import path from "path";
+import connectDB from "./db/connectToMongoDB.js";
+import authRoutes from "./routes/auth.routes.js";
+import { app, server } from "./socket/socket.js";
+
+const PORT = process.env.PORT || 5000;
+app.use('/uploads', express.static('uploads'));
+const __dirname = path.resolve();
+dotenv.config();
+
+connectDB();
+
+app.use(morgan("dev"));
+app.use(express.json()); 
+app.use(cookieParser());
+
+// Configure CORS
+const allowedOrigins = [
+  "http://localhost:3000",
+];
+ 
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (allowedOrigins.includes(origin) || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, 
+  })
+);
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
+// Define routes
+app.use("/api/auth", authRoutes);
+// Root endpoint
+app.use("/", (req, res) =>
+  res.status(200).json({ success: true, msg: "server is running" })
+);
+
+// Serve static files from the frontend directory
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+// Handle all other routes with the frontend's index.html file
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
+
+server.listen(PORT, () => {
+  console.log(`Server Running on port ${PORT}`);
+});
+
+  
