@@ -14,9 +14,6 @@ console.log('[EMAIL] Gmail Pass:', process.env.GMAIL_PASS ? '***SET***' : 'NOT S
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_PASS,
@@ -24,11 +21,6 @@ const transporter = nodemailer.createTransport({
   connectionTimeout: 10000,
   greetingTimeout: 10000,
   socketTimeout: 10000,
-  debug: false,
-  logger: false,
-  tls: {
-    rejectUnauthorized: false
-  }
 });
 
 // Test connection on startup
