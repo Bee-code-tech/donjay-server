@@ -52,31 +52,39 @@ export const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = new User({
-      name,
-      email,
-      password: hashedPassword,
-      profilePic,
-      phoneNumber,
-      otp,
-      otpExpiry,
-    });
+    // Try to send email first with timeout
+    const emailPromise = sendOTPEmail(email, otp);
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Email timeout')), 6000)
+    );
 
-    await newUser.save();
-    console.log(`[SIGNUP] User created: ${newUser._id}`);
-
-    // Try to send email but don't fail if it doesn't work
     try {
-      await sendOTPEmail(email, otp);
-      console.log(`[SIGNUP] Success - OTP sent to ${email}`);
+      await Promise.race([emailPromise, timeoutPromise]);
+      console.log(`[SIGNUP] OTP sent successfully to ${email}`);
+
+      // Only create user if email was sent successfully
+      const newUser = new User({
+        name,
+        email,
+        password: hashedPassword,
+        profilePic,
+        phoneNumber,
+        otp,
+        otpExpiry,
+      });
+
+      await newUser.save();
+      console.log(`[SIGNUP] User created: ${newUser._id}`);
+
       res.status(200).json({
         message: "OTP sent to your email, please verify to complete registration.",
+        userId: newUser._id
       });
     } catch (emailError) {
-      console.log(`[SIGNUP] Email failed but user created: ${emailError.message}`);
-      res.status(200).json({
-        message: "Account created successfully. Email service temporarily unavailable - please contact support for OTP.",
-        userId: newUser._id
+      console.log(`[SIGNUP] Email failed: ${emailError.message}`);
+      res.status(400).json({
+        error: "Failed to send verification email. Please check your email address and try again.",
+        details: emailError.message
       });
     }
   } catch (error) {
