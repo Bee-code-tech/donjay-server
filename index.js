@@ -6,6 +6,7 @@ import morgan from "morgan";
 import path from "path";
 import connectDB from "./db/connectToMongoDB.js";
 import authRoutes from "./routes/auth.routes.js";
+import carRoutes from "./routes/car.routes.js";
 import { app, server } from "./socket/socket.js";
 
 const PORT = process.env.PORT || 5000;
@@ -44,16 +45,12 @@ app.use((req, res, next) => {
 
 // Define routes
 app.use("/api/auth", authRoutes);
+app.use("/api/cars", carRoutes);
 // Root endpoint
 app.use("/", (req, res) =>
-  res.status(200).json({ success: true, msg: "server is running" })
+  res.status(200).json({ success: true, msg: "Car Listing Server is running" })
 );
 
-
-// Handle all other routes with the frontend's index.html file
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-});
 
 server.listen(PORT, () => {
   console.log(`Server Running on port ${PORT}`);

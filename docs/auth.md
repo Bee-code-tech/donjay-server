@@ -14,24 +14,22 @@ Creates a new user account and sends OTP verification email.
 **Request Body:**
 ```json
 {
-  "username": "string (5+ characters, not email format)",
+  "name": "string (5+ characters, not email format)",
   "email": "string (valid email)",
   "password": "string (6+ characters)",
   "confirmPassword": "string (must match password)",
-  "country": "string (optional)",
-  "code": "string (optional)"
+  "phoneNumber": "string (required)"
 }
 ```
 
 **Test Data:**
 ```json
 {
-  "username": "testuser123",
+  "name": "testuser123",
   "email": "testuser@example.com",
   "password": "password123",
   "confirmPassword": "password123",
-  "country": "United States",
-  "code": "+1"
+  "phoneNumber": "+1234567890"
 }
 ```
 
@@ -43,10 +41,11 @@ Creates a new user account and sends OTP verification email.
 ```
 
 **Error Responses:**
-- `400`: Username can't be in email format
+- `400`: Name can't be in email format
 - `400`: Passwords don't match
-- `400`: Username must be at least 5 characters
-- `400`: Username already exists
+- `400`: Phone number is required
+- `400`: Name must be at least 5 characters and less than 8 characters
+- `400`: Name already exists
 - `400`: Email already exists
 - `500`: Internal Server Error
 
@@ -77,11 +76,10 @@ Verifies the OTP sent to user's email and completes registration.
 ```json
 {
   "_id": "user_id",
-  "username": "testuser123",
-  "profilePic": "",
+  "name": "testuser123",
+  "profilePic": "https://avatar.iran.liara.run/public/boy?username=testuser123",
   "email": "testuser@example.com",
-  "profileCode": "USER-ABCD-EFGH",
-  "country": "United States",
+  "role": "customer",
   "token": "jwt_token_here",
   "message": "User verified successfully"
 }
@@ -103,7 +101,7 @@ Authenticates user with username and password.
 **Request Body:**
 ```json
 {
-  "username": "string",
+  "email": "string",
   "password": "string"
 }
 ```
@@ -111,7 +109,7 @@ Authenticates user with username and password.
 **Test Data:**
 ```json
 {
-  "username": "testuser123",
+  "email": "testuser@example.com",
   "password": "password123"
 }
 ```
@@ -120,18 +118,16 @@ Authenticates user with username and password.
 ```json
 {
   "_id": "user_id",
-  "fullName": "User Full Name",
-  "username": "testuser123",
-  "profilePic": "",
-  "token": "jwt_token_here",
-  "notifications": [],
-  "country": "United States",
-  "profileCode": "USER-ABCD-EFGH"
+  "name": "testuser123",
+  "profilePic": "https://avatar.iran.liara.run/public/boy?username=testuser123",
+  "email": "testuser@example.com",
+  "role": "customer",
+  "token": "jwt_token_here"
 }
 ```
 
 **Error Responses:**
-- `400`: Invalid username or password
+- `400`: Invalid email or password
 - `500`: Internal Server Error
 
 ---
@@ -264,7 +260,7 @@ Authorization: Bearer jwt_token_here
 ```
 
 **Error Responses:**
-- `401`: Your Old Password did not match
+- `401`: Your Old Password did not matched
 - `500`: Internal Server Error
 
 ---
@@ -288,7 +284,10 @@ Authorization: Bearer jwt_token_here
 ## Notes
 
 - All passwords must be at least 6 characters long
-- Usernames must be at least 5 characters and cannot be in email format
+- Profile pictures are automatically generated using Iran.liara avatar service
+- All new users default to "customer" role (admin role must be set manually)
+- Car listing website supports two user roles: "customer" and "admin"
+- Usernames must be at least 5 characters and less than 8 characters, and cannot be in email format
 - OTP expires after 10 minutes
 - Password reset tokens expire after 1 hour
 - JWT tokens are set as HTTP-only cookies for security
@@ -302,24 +301,22 @@ Authorization: Bearer jwt_token_here
 curl -X POST http://localhost:5000/api/auth/signup \
   -H "Content-Type: application/json" \
   -d '{
-    "username": "testuser123",
+    "name": "testuser123",
     "email": "testuser@example.com",
     "password": "password123",
     "confirmPassword": "password123",
-    "country": "United States",
-    "code": "+1"
+    "phoneNumber": "+1234567890"
   }'
 
 # Production
 curl -X POST https://donjay.onrender.com/api/auth/signup \
   -H "Content-Type: application/json" \
   -d '{
-    "username": "testuser123",
+    "name": "testuser123",
     "email": "testuser@example.com",
     "password": "password123",
     "confirmPassword": "password123",
-    "country": "United States",
-    "code": "+1"
+    "phoneNumber": "+1234567890"
   }'
 ```
 
@@ -329,7 +326,7 @@ curl -X POST https://donjay.onrender.com/api/auth/signup \
 curl -X POST http://localhost:5000/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
-    "username": "testuser123",
+    "name": "testuser123",
     "password": "password123"
   }'
 
@@ -337,7 +334,7 @@ curl -X POST http://localhost:5000/api/auth/login \
 curl -X POST https://donjay.onrender.com/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
-    "username": "testuser123",
+    "name": "testuser123",
     "password": "password123"
   }'
 ```
