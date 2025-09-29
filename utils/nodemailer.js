@@ -4,15 +4,40 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// Validate environment variables
+if (!process.env.GMAIL_USER || !process.env.GMAIL_PASS) {
+  console.error('[EMAIL] Missing GMAIL_USER or GMAIL_PASS environment variables');
+}
+
+console.log('[EMAIL] Gmail User:', process.env.GMAIL_USER ? process.env.GMAIL_USER : 'NOT SET');
+console.log('[EMAIL] Gmail Pass:', process.env.GMAIL_PASS ? '***SET***' : 'NOT SET');
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_PASS,
   },
-  connectionTimeout: 5000,
-  greetingTimeout: 5000,
-  socketTimeout: 5000,
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
+  debug: false,
+  logger: false,
+  tls: {
+    rejectUnauthorized: false
+  }
+});
+
+// Test connection on startup
+transporter.verify((error, success) => {
+  if (error) {
+    console.log('[EMAIL] SMTP Connection Error:', error.message);
+  } else {
+    console.log('[EMAIL] SMTP Connection: Ready to send emails');
+  }
 });
 
 export const sendOTPEmail = async (email, otp) => {

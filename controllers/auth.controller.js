@@ -55,7 +55,7 @@ export const signup = async (req, res) => {
     // Try to send email first with timeout
     const emailPromise = sendOTPEmail(email, otp);
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Email timeout')), 6000)
+      setTimeout(() => reject(new Error('Email timeout')), 15000)
     );
 
     try {
