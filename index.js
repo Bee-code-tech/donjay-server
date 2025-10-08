@@ -8,6 +8,7 @@ import connectDB from "./db/connectToMongoDB.js";
 import authRoutes from "./routes/auth.routes.js";
 import carRoutes from "./routes/car.routes.js";
 import messageRoutes from "./routes/message.routes.js";
+import dealRoutes from "./routes/deal.routes.js";
 import { app, server } from "./socket/socket.js";
 
 const PORT = process.env.PORT || 5000;
@@ -48,6 +49,7 @@ app.use((req, res, next) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/cars", carRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/deals", dealRoutes);
 // Root endpoint
 app.use("/", (req, res) =>
   res.status(200).json({ success: true, msg: "Car Listing Server is running" })

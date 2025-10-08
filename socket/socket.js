@@ -60,6 +60,28 @@ io.on("connection", (socket) => {
     });
   });
 
+  // Handle deal-related events
+  socket.on("joinDealRoom", (dealId) => {
+    socket.join(`deal_${dealId}`);
+    console.log(`User ${userId} joined deal room ${dealId}`);
+  });
+
+  socket.on("leaveDealRoom", (dealId) => {
+    socket.leave(`deal_${dealId}`);
+    console.log(`User ${userId} left deal room ${dealId}`);
+  });
+
+  // Handle deal status updates
+  socket.on("dealStatusUpdate", ({ dealId, status, note }) => {
+    socket.to(`deal_${dealId}`).emit("dealStatusChanged", {
+      dealId,
+      status,
+      note,
+      updatedBy: userId,
+      updatedAt: new Date()
+    });
+  });
+
    socket.on("joinGroup", (groupId) => {
     socket.join(groupId);
     console.log(`User ${userId} joined group ${groupId}`);
