@@ -1,6 +1,7 @@
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
 import { io, getReceiverSocketId } from "../socket/socket.js";
+import { sendNewMessageEmail } from "../utils/emailNotifications.js";
 
 // Send a new message
 export const sendMessage = async (req, res) => {
@@ -58,6 +59,9 @@ export const sendMessage = async (req, res) => {
     const receiverSocketId = getReceiverSocketId(recipientId);
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
+    } else {
+      // Send email if recipient is offline
+      await sendNewMessageEmail(sender, recipient, content).catch(console.error);
     }
 
     console.log(`[SEND-MESSAGE] Success - Message sent: ${newMessage._id}`);

@@ -2,6 +2,7 @@ import Deal from "../models/deal.model.js";
 import Car from "../models/car.model.js";
 import User from "../models/user.model.js";
 import { io, getReceiverSocketId } from "../socket/socket.js";
+import { sendDealCreatedEmail, sendDealApprovedEmail, sendDealRejectedEmail, sendDealCompletedEmail } from "../utils/emailNotifications.js";
 
 // Create a new deal
 export const createDeal = async (req, res) => {
@@ -93,6 +94,9 @@ export const createDeal = async (req, res) => {
       { path: 'primaryCar', select: 'carName year price images owner' },
       { path: 'secondaryCar', select: 'carName year price images owner' }
     ]);
+
+    // Send email notifications
+    await sendDealCreatedEmail(newDeal, req.user, primaryCar).catch(console.error);
 
     // Notify admins about new deal
     const admins = await User.find({ role: 'admin' }).select('_id');
@@ -346,6 +350,9 @@ export const approveDeal = async (req, res) => {
       { path: 'processedBy', select: 'name email role' }
     ]);
 
+    // Send approval email
+    await sendDealApprovedEmail(deal, deal.customer, deal.primaryCar).catch(console.error);
+
     // Notify customer
     const customerSocketId = getReceiverSocketId(deal.customer._id);
     if (customerSocketId) {
@@ -393,6 +400,9 @@ export const rejectDeal = async (req, res) => {
       { path: 'secondaryCar', select: 'carName year price images' },
       { path: 'processedBy', select: 'name email role' }
     ]);
+
+    // Send rejection email
+    await sendDealRejectedEmail(deal, deal.customer, deal.primaryCar, rejectionReason).catch(console.error);
 
     // Notify customer
     const customerSocketId = getReceiverSocketId(deal.customer._id);
@@ -442,6 +452,9 @@ export const completeDeal = async (req, res) => {
       { path: 'secondaryCar', select: 'carName year price images' },
       { path: 'processedBy', select: 'name email role' }
     ]);
+
+    // Send completion email
+    await sendDealCompletedEmail(deal, deal.customer, deal.primaryCar).catch(console.error);
 
     // Notify customer
     const customerSocketId = getReceiverSocketId(deal.customer._id);

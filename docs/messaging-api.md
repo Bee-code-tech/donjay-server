@@ -81,6 +81,9 @@ Send a new message to another user.
 }
 ```
 
+**Email Notifications:**
+- Recipient receives email notification if offline (no real-time delivery)
+
 ---
 
 ### 2. Get Conversations
@@ -351,6 +354,16 @@ socket.on("getOnlineUsers", (userIds) => {
   console.log("Online users:", userIds);
 });
 ```
+
+---
+
+## Email Notifications
+
+The messaging system includes email notifications:
+
+- **New Message**: Recipient receives email notification if they are offline (no real-time delivery)
+
+**Note**: Emails are only sent when the recipient is not connected via WebSocket to avoid duplicate notifications.
 
 ---
 

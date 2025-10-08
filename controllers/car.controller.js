@@ -1,5 +1,6 @@
 import Car from "../models/car.model.js";
 import User from "../models/user.model.js";
+import { sendCarApprovedEmail, sendCarRejectedEmail, sendNewCarSubmittedEmail } from "../utils/emailNotifications.js";
 
 // Create a new car listing
 export const createCar = async (req, res) => {
@@ -50,6 +51,13 @@ export const createCar = async (req, res) => {
 
     await newCar.save();
     await newCar.populate('owner', 'name email role');
+
+    // Send email notifications
+    if (status === 'approved') {
+      await sendCarApprovedEmail(newCar, req.user).catch(console.error);
+    } else {
+      await sendNewCarSubmittedEmail(newCar, req.user).catch(console.error);
+    }
 
     console.log(`[CREATE-CAR] Success - Car created: ${newCar._id} (Status: ${status})`);
     res.status(201).json({
@@ -283,6 +291,9 @@ export const approveCar = async (req, res) => {
     ).populate('owner', 'name email')
      .populate('approvedBy', 'name email');
 
+    // Send approval email
+    await sendCarApprovedEmail(updatedCar, updatedCar.owner).catch(console.error);
+
     console.log(`[APPROVE-CAR] Success - Car approved: ${updatedCar._id}`);
     res.status(200).json({
       message: "Car approved successfully",
@@ -321,6 +332,9 @@ export const rejectCar = async (req, res) => {
       { new: true }
     ).populate('owner', 'name email')
      .populate('rejectedBy', 'name email');
+
+    // Send rejection email
+    await sendCarRejectedEmail(updatedCar, updatedCar.owner, reason).catch(console.error);
 
     console.log(`[REJECT-CAR] Success - Car rejected: ${updatedCar._id}`);
     res.status(200).json({

@@ -82,6 +82,17 @@ io.on("connection", (socket) => {
     });
   });
 
+  // Handle inspection-related events
+  socket.on("joinInspectionRoom", (inspectionId) => {
+    socket.join(`inspection_${inspectionId}`);
+    console.log(`User ${userId} joined inspection room ${inspectionId}`);
+  });
+
+  socket.on("leaveInspectionRoom", (inspectionId) => {
+    socket.leave(`inspection_${inspectionId}`);
+    console.log(`User ${userId} left inspection room ${inspectionId}`);
+  });
+
    socket.on("joinGroup", (groupId) => {
     socket.join(groupId);
     console.log(`User ${userId} joined group ${groupId}`);

@@ -114,6 +114,9 @@ Create a new deal (buy, sell, or swap).
 }
 ```
 
+**Email Notifications:**
+- All admins receive email notification about the new deal
+
 ---
 
 ### 2. Get All Deals (Admin Only)
@@ -348,6 +351,9 @@ Approve a pending deal.
 }
 ```
 
+**Email Notifications:**
+- Customer receives email confirmation of deal approval
+
 ---
 
 ### 7. Reject Deal (Admin Only)
@@ -372,6 +378,9 @@ Reject a pending deal.
 }
 ```
 
+**Email Notifications:**
+- Customer receives email notification with rejection reason
+
 ---
 
 ### 8. Complete Deal (Admin Only)
@@ -395,6 +404,9 @@ Mark an approved deal as completed.
   }
 }
 ```
+
+**Email Notifications:**
+- Customer receives email confirmation of deal completion
 
 ---
 
@@ -543,6 +555,19 @@ socket.on("dealStatusChanged", (data) => {
   console.log(`Updated by: ${data.updatedBy} at ${data.updatedAt}`);
 });
 ```
+
+---
+
+## Email Notifications
+
+The system automatically sends email notifications for key deal events:
+
+- **Deal Created**: All admins receive email notification about new deals
+- **Deal Approved**: Customer receives email confirmation of approval
+- **Deal Rejected**: Customer receives email with rejection reason
+- **Deal Completed**: Customer receives email confirmation of completion
+
+**Note**: All emails are sent asynchronously and failures won't affect API responses.
 
 ---
 
