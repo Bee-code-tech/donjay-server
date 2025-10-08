@@ -25,6 +25,41 @@ io.on("connection", (socket) => {
   const userId = socket.handshake.query.userId;
   if (userId != "undefined") userSocketMap[userId] = socket.id;
 
+  // Join user to their personal room for direct messages
+  if (userId != "undefined") {
+    socket.join(`user_${userId}`);
+    console.log(`User ${userId} joined personal room`);
+  }
+
+  // Handle joining conversation rooms for messaging
+  socket.on("joinConversation", (conversationId) => {
+    socket.join(`conversation_${conversationId}`);
+    console.log(`User ${userId} joined conversation ${conversationId}`);
+  });
+
+  // Handle leaving conversation rooms
+  socket.on("leaveConversation", (conversationId) => {
+    socket.leave(`conversation_${conversationId}`);
+    console.log(`User ${userId} left conversation ${conversationId}`);
+  });
+
+  // Handle message typing indicators
+  socket.on("typing", ({ conversationId, isTyping }) => {
+    socket.to(`conversation_${conversationId}`).emit("userTyping", {
+      userId,
+      isTyping
+    });
+  });
+
+  // Handle message read receipts
+  socket.on("messageRead", ({ messageId, conversationId }) => {
+    socket.to(`conversation_${conversationId}`).emit("messageReadReceipt", {
+      messageId,
+      readBy: userId,
+      readAt: new Date()
+    });
+  });
+
    socket.on("joinGroup", (groupId) => {
     socket.join(groupId);
     console.log(`User ${userId} joined group ${groupId}`);
