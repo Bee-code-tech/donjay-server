@@ -11,7 +11,7 @@ const generateOTP = () => {
 export const signup = async (req, res) => {
   try {
     console.log(`[SIGNUP] Request from ${req.body.email}`);
-    const { name, email, password, confirmPassword, phoneNumber} = req.body;
+    const { name, email, password, confirmPassword, phoneNumber, address} = req.body;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -69,6 +69,7 @@ export const signup = async (req, res) => {
         password: hashedPassword,
         profilePic,
         phoneNumber,
+        address,
         otp,
         otpExpiry,
       });
@@ -128,6 +129,7 @@ export const verifyOTP = async (req, res) => {
       profilePic: user.profilePic,
       email: user.email,
       role: user.role,
+      address: user.address,
       token,
       message: "User verified successfully",
     });
@@ -160,7 +162,9 @@ export const login = async (req, res) => {
       profilePic: user.profilePic,
       email: user.email,
       role: user.role,
+      address: user.address,
       token: token,
+      phoneNumber: user.phoneNumber
     });
   } catch (error) {
     console.log(`[LOGIN] Error:`, error.message);
