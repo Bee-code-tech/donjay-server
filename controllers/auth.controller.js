@@ -130,6 +130,7 @@ export const verifyOTP = async (req, res) => {
       email: user.email,
       role: user.role,
       address: user.address,
+      phoneNumber: user.phoneNumber,
       token,
       message: "User verified successfully",
     });
