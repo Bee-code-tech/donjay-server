@@ -11,7 +11,8 @@ const generateOTP = () => {
 export const signup = async (req, res) => {
   try {
     console.log(`[SIGNUP] Request from ${req.body.email}`);
-    const { name, email, password, confirmPassword, phoneNumber, address} = req.body;
+    const { name, email, password, confirmPassword, phoneNumber, address } =
+      req.body;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -28,7 +29,12 @@ export const signup = async (req, res) => {
     }
 
     if (name.length < 5) {
-      return res.status(400).json({ error: "Name must be at least 5 characters and less than 8 characters" });
+      return res
+        .status(400)
+        .json({
+          error:
+            "Name must be at least 5 characters and less than 8 characters",
+        });
     }
 
     const userExists = await User.findOne({ name });
@@ -55,7 +61,7 @@ export const signup = async (req, res) => {
     // Try to send email first with timeout
     const emailPromise = sendOTPEmail(email, otp);
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Email timeout')), 15000)
+      setTimeout(() => reject(new Error("Email timeout")), 15000)
     );
 
     try {
@@ -78,14 +84,16 @@ export const signup = async (req, res) => {
       console.log(`[SIGNUP] User created: ${newUser._id}`);
 
       res.status(200).json({
-        message: "OTP sent to your email, please verify to complete registration.",
-        userId: newUser._id
+        message:
+          "OTP sent to your email, please verify to complete registration.",
+        userId: newUser._id,
       });
     } catch (emailError) {
       console.log(`[SIGNUP] Email failed: ${emailError.message}`);
       res.status(400).json({
-        error: "Failed to send verification email. Please check your email address and try again.",
-        details: emailError.message
+        error:
+          "Failed to send verification email. Please check your email address and try again.",
+        details: emailError.message,
       });
     }
   } catch (error) {
@@ -165,7 +173,7 @@ export const login = async (req, res) => {
       role: user.role,
       address: user.address,
       token: token,
-      phoneNumber: user.phoneNumber
+      phoneNumber: user.phoneNumber,
     });
   } catch (error) {
     console.log(`[LOGIN] Error:`, error.message);
@@ -199,7 +207,9 @@ export const updatePass = async (req, res) => {
 
     res.clearCookie("jwt");
     console.log(`[UPDATE-PASS] Success - Password updated for: ${user._id}`);
-    res.status(200).json({ success: true, message: "Password Changed successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Password Changed successfully" });
   } catch (error) {
     console.log(`[UPDATE-PASS] Error:`, error.message);
     res.status(500).json({ error: "Internal Server Error" });
@@ -230,16 +240,19 @@ export const forgotPassword = async (req, res) => {
       expiresIn: "1h",
     });
 
-    const frontendUrl = process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000'
-      : 'https://mern-chat-frontend-azure.vercel.app';
+    const frontendUrl =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://mern-chat-frontend-azure.vercel.app";
 
-    const resetUrl = `${frontendUrl}/reset?token=${resetToken}`;
+    const resetUrl = `${frontendUrl}/auth/resetpassword?token=${resetToken}`;
 
     await sendResetPasswordEmail(user.email, resetUrl);
 
     console.log(`[FORGOT-PASSWORD] Success - Reset link sent to: ${email}`);
-    res.status(200).json({ message: "Password reset link sent to your email." });
+    res
+      .status(200)
+      .json({ message: "Password reset link sent to your email." });
   } catch (error) {
     console.log(`[FORGOT-PASSWORD] Error:`, error.message);
     res.status(500).json({ error: "Internal Server Error" });
@@ -283,17 +296,28 @@ export const resetPassword = async (req, res) => {
     // Check if new password is different from the old one
     const isSamePassword = await bcrypt.compare(newPassword, user.password);
     if (isSamePassword) {
-      return res.status(400).json({ error: "New password must be different from the old password." });
+      return res
+        .status(400)
+        .json({
+          error: "New password must be different from the old password.",
+        });
     }
 
     user.password = hashedNewPassword;
     await user.save();
 
-    console.log(`[RESET-PASSWORD] Success - Password reset for user: ${user._id}`);
-    res.status(200).json({ message: "Password has been reset successfully.", success: true });
+    console.log(
+      `[RESET-PASSWORD] Success - Password reset for user: ${user._id}`
+    );
+    res
+      .status(200)
+      .json({
+        message: "Password has been reset successfully.",
+        success: true,
+      });
   } catch (error) {
     console.log(`[RESET-PASSWORD] Error:`, error.message);
-    if (error.name === 'TokenExpiredError') {
+    if (error.name === "TokenExpiredError") {
       return res.status(400).json({ error: "Reset token has expired." });
     }
     res.status(500).json({ error: "Internal Server Error" });
