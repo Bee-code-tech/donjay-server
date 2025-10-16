@@ -203,7 +203,9 @@ export const getMessages = async (req, res) => {
     // Check if conversation is allowed
     const isValidConversation = 
       (req.user.role === 'admin' && otherUser.role === 'customer') ||
-      (req.user.role === 'customer' && otherUser.role === 'admin');
+      (req.user.role === 'customer' && otherUser.role === 'admin') ||
+      (req.user.role === 'admin' && otherUser.role === 'admin') ||
+      (req.user.role === 'customer' && otherUser.role === 'customer'); 
 
     if (!isValidConversation) {
       return res.status(403).json({ 

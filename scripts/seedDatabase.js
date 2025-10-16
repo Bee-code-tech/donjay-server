@@ -137,7 +137,11 @@ const sampleCars = [
     mileage: 25000,
     price: 28500,
     note: "Well maintained family sedan with excellent fuel economy",
-    images: ["https://example.com/toyota-camry-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&q=80",
+      "https://images.unsplash.com/photo-1623869675781-80aa31cacc0e?w=800&q=80",
+      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -150,7 +154,11 @@ const sampleCars = [
     mileage: 5000,
     price: 24900,
     note: "Brand new compact car, perfect for city driving",
-    images: ["https://example.com/honda-civic-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1590362891991-f776e747a588?w=800&q=80",
+      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80",
+      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80"
+    ],
     status: "pending"
   },
   {
@@ -163,7 +171,11 @@ const sampleCars = [
     mileage: 15000,
     price: 45000,
     note: "Electric vehicle with autopilot features",
-    images: ["https://example.com/tesla-model3-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&q=80",
+      "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80",
+      "https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -176,7 +188,11 @@ const sampleCars = [
     mileage: 35000,
     price: 38000,
     note: "Reliable pickup truck for work and recreation",
-    images: ["https://example.com/ford-f150-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1593450146993-8f17c8e5cc77?w=800&q=80",
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80",
+      "https://images.unsplash.com/photo-1622800881374-6e3134c82e77?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -189,7 +205,11 @@ const sampleCars = [
     mileage: 18000,
     price: 42000,
     note: "Luxury sedan with premium features",
-    images: ["https://example.com/bmw-3series-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
+      "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=800&q=80",
+      "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -202,7 +222,11 @@ const sampleCars = [
     mileage: 2000,
     price: 48000,
     note: "Premium compact executive car",
-    images: ["https://example.com/audi-a4-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1610768764270-790fbec18178?w=800&q=80",
+      "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=800&q=80",
+      "https://images.unsplash.com/photo-1606611013016-969a3f1ee4ae?w=800&q=80"
+    ],
     status: "pending"
   },
   {
@@ -215,7 +239,11 @@ const sampleCars = [
     mileage: 45000,
     price: 22000,
     note: "Affordable midsize sedan with good features",
-    images: ["https://example.com/chevy-malibu-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80",
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -228,7 +256,11 @@ const sampleCars = [
     mileage: 28000,
     price: 26500,
     note: "Comfortable ride with advanced safety features",
-    images: ["https://example.com/nissan-altima-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1600705722821-c1a047873a1f?w=800&q=80",
+      "https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80",
+      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -241,7 +273,11 @@ const sampleCars = [
     mileage: 1000,
     price: 23500,
     note: "Stylish compact sedan with warranty",
-    images: ["https://example.com/hyundai-elantra-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1599912027796-c1e0c9eb0af1?w=800&q=80",
+      "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800&q=80",
+      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80"
+    ],
     status: "pending"
   },
   {
@@ -254,7 +290,11 @@ const sampleCars = [
     mileage: 22000,
     price: 52000,
     note: "Luxury sedan with advanced technology",
-    images: ["https://example.com/mercedes-c-class-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1618843479619-f08b29e2c1d8?w=800&q=80",
+      "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80",
+      "https://images.unsplash.com/photo-1617886903355-9354bb57751f?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -267,7 +307,11 @@ const sampleCars = [
     mileage: 32000,
     price: 21000,
     note: "European engineering with good fuel economy",
-    images: ["https://example.com/vw-jetta-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1622800881374-6e3134c82e77?w=800&q=80",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
+      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -280,7 +324,11 @@ const sampleCars = [
     mileage: 500,
     price: 35000,
     note: "All-wheel drive SUV perfect for adventures",
-    images: ["https://example.com/subaru-outback-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80",
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80",
+      "https://images.unsplash.com/photo-1602549533694-5ca5d6943ce2?w=800&q=80"
+    ],
     status: "pending"
   },
   {
@@ -293,7 +341,11 @@ const sampleCars = [
     mileage: 20000,
     price: 29000,
     note: "Compact SUV with sporty handling",
-    images: ["https://example.com/mazda-cx5-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1617886903355-9354bb57751f?w=800&q=80",
+      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80",
+      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -306,7 +358,11 @@ const sampleCars = [
     mileage: 38000,
     price: 33000,
     note: "Off-road capable with removable doors and roof",
-    images: ["https://example.com/jeep-wrangler-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80",
+      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80",
+      "https://images.unsplash.com/photo-1581540222194-0def2dda95b8?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -319,7 +375,11 @@ const sampleCars = [
     mileage: 800,
     price: 46000,
     note: "Luxury hybrid sedan with premium interior",
-    images: ["https://example.com/lexus-es-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&q=80",
+      "https://images.unsplash.com/photo-1555626906-fcf10d6851b4?w=800&q=80",
+      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80"
+    ],
     status: "pending"
   },
   {
@@ -332,7 +392,11 @@ const sampleCars = [
     mileage: 42000,
     price: 19500,
     note: "Reliable midsize sedan with long warranty",
-    images: ["https://example.com/kia-optima-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80",
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -345,7 +409,11 @@ const sampleCars = [
     mileage: 16000,
     price: 39000,
     note: "Sport luxury sedan with precision handling",
-    images: ["https://example.com/acura-tlx-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
+      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -358,7 +426,11 @@ const sampleCars = [
     mileage: 30000,
     price: 35500,
     note: "Performance sedan with advanced driver assistance",
-    images: ["https://example.com/infiniti-q50-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
+      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80"
+    ],
     status: "approved"
   },
   {
@@ -371,7 +443,11 @@ const sampleCars = [
     mileage: 200,
     price: 68000,
     note: "Full-size luxury sedan with premium amenities",
-    images: ["https://example.com/genesis-g90-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=800&q=80",
+      "https://images.unsplash.com/photo-1606611013016-969a3f1ee4ae?w=800&q=80",
+      "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=800&q=80"
+    ],
     status: "pending"
   },
   {
@@ -384,7 +460,11 @@ const sampleCars = [
     mileage: 24000,
     price: 41000,
     note: "American luxury sedan with bold styling",
-    images: ["https://example.com/cadillac-ct5-1.jpg"],
+    images: [
+      "https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&q=80",
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
+      "https://images.unsplash.com/photo-1610768764270-790fbec18178?w=800&q=80"
+    ],
     status: "approved"
   }
 ];
