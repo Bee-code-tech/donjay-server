@@ -700,11 +700,19 @@ The system automatically generates time slots for each day:
 ```javascript
 import io from 'socket.io-client';
 
+// Development
 const socket = io('http://localhost:5000', {
   query: {
     userId: 'your_user_id'
   }
 });
+
+// Production
+// const socket = io('https://donjay-server.vercel.app', {
+//   query: {
+//     userId: 'your_user_id'
+//   }
+// });
 
 // Join inspection room for real-time updates
 socket.emit('joinInspectionRoom', 'inspection_id');

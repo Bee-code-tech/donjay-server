@@ -2,7 +2,7 @@
 
 **Base URLs:**
 - Development: `http://localhost:5000/api/cars`
-- Production: `https://donjay.onrender.com/api/cars`
+- Production: `https://donjay-server.vercel.app/api/cars`
 
 ## Overview
 
