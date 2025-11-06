@@ -26,7 +26,7 @@ app.use(cookieParser());
 // Configure CORS
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://donjayautoswebsite.netlify.app", //added this link
+  "https://donjayautoswebsite.netlify.app/", 
 ];
 
 app.use(
