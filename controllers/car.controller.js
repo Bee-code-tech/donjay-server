@@ -99,6 +99,7 @@ export const getAllCars = async (req, res) => {
         hasPrevPage: page > 1
       }
     });
+    
   } catch (error) {
     console.log(`[GET-ALL-CARS] Error:`, error.message);
     res.status(500).json({ error: "Internal Server Error" });
