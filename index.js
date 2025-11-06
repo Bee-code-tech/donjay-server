@@ -13,22 +13,22 @@ import inspectionRoutes from "./routes/inspection.routes.js";
 import { app, server } from "./socket/socket.js";
 
 const PORT = process.env.PORT || 5000;
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 const __dirname = path.resolve();
 dotenv.config();
 
 connectDB();
 
 app.use(morgan("dev"));
-app.use(express.json()); 
+app.use(express.json());
 app.use(cookieParser());
 
 // Configure CORS
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://donjayautoswebsite.netlify.app",
+  "https://donjayautoswebsite.netlify.app", //added this link
 ];
- 
+
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -38,12 +38,12 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, 
+    credentials: true,
   })
 );
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credential', 'true');
+  res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
 
@@ -58,9 +58,6 @@ app.use("/", (req, res) =>
   res.status(200).json({ success: true, msg: "Car Listing Server is running" })
 );
 
-
 server.listen(PORT, () => {
   console.log(`Server Running on port ${PORT}`);
 });
-
-  
