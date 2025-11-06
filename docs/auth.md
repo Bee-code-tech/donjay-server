@@ -2,7 +2,7 @@
 
 **Base URLs:**
 - Development: `http://localhost:5000/api/auth`
-- Production: `https://donjay.onrender.com/api/auth`
+- Production: `https://donjay-server.vercel.app/api/auth`
 
 ## Endpoints
 
@@ -309,7 +309,7 @@ curl -X POST http://localhost:5000/api/auth/signup \
   }'
 
 # Production
-curl -X POST https://donjay.onrender.com/api/auth/signup \
+curl -X POST https://donjay-server.vercel.app/api/auth/signup \
   -H "Content-Type: application/json" \
   -d '{
     "name": "testuser123",
@@ -331,7 +331,7 @@ curl -X POST http://localhost:5000/api/auth/login \
   }'
 
 # Production
-curl -X POST https://donjay.onrender.com/api/auth/login \
+curl -X POST https://donjay-server.vercel.app/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "name": "testuser123",

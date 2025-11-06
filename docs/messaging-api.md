@@ -472,11 +472,19 @@ const response = await fetch('/api/messages/conversations?page=1&limit=10', {
 ```javascript
 import io from 'socket.io-client';
 
+// Development
 const socket = io('http://localhost:5000', {
   query: {
     userId: 'your_user_id'
   }
 });
+
+// Production
+// const socket = io('https://donjay-server.vercel.app', {
+//   query: {
+//     userId: 'your_user_id'
+//   }
+// });
 
 // Join a conversation
 socket.emit('joinConversation', 'user1_user2');

@@ -243,7 +243,7 @@ export const getMessages = async (req, res) => {
 
     console.log(`[GET-MESSAGES] Success - Retrieved ${messages.length} messages`);
     res.status(200).json({
-      messages: messages.reverse(), // Return in chronological order
+      messages: messages.reverse(), 
       otherUser: {
         _id: otherUser._id,
         name: otherUser.name,
