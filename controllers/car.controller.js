@@ -3,9 +3,75 @@ import User from "../models/user.model.js";
 import { sendCarApprovedEmail, sendCarRejectedEmail, sendNewCarSubmittedEmail } from "../utils/emailNotifications.js";
 
 // Create a new car listing
+// export const createCar = async (req, res) => {
+//   try {
+//     console.log(`[CREATE-CAR] Request from user: ${req.user._id}`);
+
+//     const {
+//       carName,
+//       year,
+//       condition,
+//       transmission,
+//       fuelType,
+//       engine,
+//       mileage,
+//       price,
+//       note,
+//       images
+//     } = req.body;
+
+//     // Validation
+//     if (!carName || !year || !condition || !transmission || !fuelType || !engine || mileage === undefined || !price || !images?.length) {
+//       return res.status(400).json({
+//         error: "Missing required fields: carName, year, condition, transmission, fuelType, engine, mileage, price, and at least one image"
+//       });
+//     }
+
+//     // Set status based on user role
+//     const status = req.user.role === 'admin' ? 'approved' : 'pending';
+//     const approvedBy = req.user.role === 'admin' ? req.user._id : undefined;
+//     const approvedAt = req.user.role === 'admin' ? new Date() : undefined;
+
+//     const newCar = new Car({
+//       carName,
+//       year,
+//       condition,
+//       transmission,
+//       fuelType,
+//       engine,
+//       mileage,
+//       price,
+//       note,
+//       images,
+//       status,
+//       owner: req.user._id,
+//       approvedBy,
+//       approvedAt
+//     });
+
+//     await newCar.save();
+//     await newCar.populate('owner', 'name email role');
+
+//     // Send email notifications
+//     if (status === 'approved') {
+//       await sendCarApprovedEmail(newCar, req.user).catch(console.error);
+//     } else {
+//       await sendNewCarSubmittedEmail(newCar, req.user).catch(console.error);
+//     }
+
+//     console.log(`[CREATE-CAR] Success - Car created: ${newCar._id} (Status: ${status})`);
+//     res.status(201).json({
+//       message: `Car listing ${status === 'approved' ? 'created and approved' : 'created successfully and pending approval'}`,
+//       car: newCar
+//     });
+//   } catch (error) {
+//     console.log(`[CREATE-CAR] Error:`, error.message);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
 export const createCar = async (req, res) => {
   try {
-    console.log(`[CREATE-CAR] Request from user: ${req.user._id}`);
+    console.log(`[CREATE-CAR] Request from user: ${req.user._id}, Role: ${req.user.role}`);
 
     const {
       carName,
@@ -20,55 +86,145 @@ export const createCar = async (req, res) => {
       images
     } = req.body;
 
-    // Validation
-    if (!carName || !year || !condition || !transmission || !fuelType || !engine || mileage === undefined || !price || !images?.length) {
+    // Comprehensive validation
+    const validationErrors = [];
+
+    // Required fields validation
+    if (!carName?.trim()) validationErrors.push("carName is required");
+    if (!year) validationErrors.push("year is required");
+    if (!condition) validationErrors.push("condition is required");
+    if (!transmission) validationErrors.push("transmission is required");
+    if (!fuelType) validationErrors.push("fuelType is required");
+    if (!engine?.trim()) validationErrors.push("engine is required");
+    if (mileage === undefined || mileage === null) validationErrors.push("mileage is required");
+    if (price === undefined || price === null) validationErrors.push("price is required");
+    
+    // Image validation
+    if (!images?.length) {
+      validationErrors.push("At least one image is required");
+    } else if (!Array.isArray(images)) {
+      validationErrors.push("Images must be an array");
+    } else if (images.length > 10) {
+      validationErrors.push("Maximum 10 images allowed");
+    }
+
+    // Data type and range validation
+    const currentYear = new Date().getFullYear();
+    if (year && (year < 1900 || year > currentYear + 1)) {
+      validationErrors.push(`Year must be between 1900 and ${currentYear + 1}`);
+    }
+    
+    if (mileage && (mileage < 0 || mileage > 1000000)) {
+      validationErrors.push("Mileage must be between 0 and 1,000,000");
+    }
+    
+    if (price && (price < 0 || price > 100000000)) {
+      validationErrors.push("Price must be between 0 and 100,000,000");
+    }
+
+    if (validationErrors.length > 0) {
+      console.log(`[CREATE-CAR] Validation failed: ${validationErrors.join(', ')}`);
       return res.status(400).json({
-        error: "Missing required fields: carName, year, condition, transmission, fuelType, engine, mileage, price, and at least one image"
+        error: "Validation failed",
+        details: validationErrors
       });
     }
 
-    // Set status based on user role
-    const status = req.user.role === 'admin' ? 'approved' : 'pending';
-    const approvedBy = req.user.role === 'admin' ? req.user._id : undefined;
-    const approvedAt = req.user.role === 'admin' ? new Date() : undefined;
+    // Sanitize inputs
+    const sanitizedData = {
+      carName: carName.trim(),
+      year: parseInt(year),
+      condition: condition.toLowerCase(),
+      transmission: transmission.toLowerCase(),
+      fuelType: fuelType.toLowerCase(),
+      engine: engine.trim(),
+      mileage: parseInt(mileage),
+      price: parseFloat(price),
+      note: note?.trim() || '',
+      images: images.slice(0, 10), // Limit to 10 images
+      owner: req.user._id
+    };
 
+    // Set status based on user role
+    const isAdmin = req.user.role === 'admin';
+    const status = isAdmin ? 'approved' : 'pending';
+    
+    const approvalData = isAdmin ? {
+      approvedBy: req.user._id,
+      approvedAt: new Date()
+    } : {};
+
+    // Create car document
     const newCar = new Car({
-      carName,
-      year,
-      condition,
-      transmission,
-      fuelType,
-      engine,
-      mileage,
-      price,
-      note,
-      images,
+      ...sanitizedData,
       status,
-      owner: req.user._id,
-      approvedBy,
-      approvedAt
+      ...approvalData,
+      createdAt: new Date(),
+      updatedAt: new Date()
     });
 
+    // Save to database with transaction safety
     await newCar.save();
-    await newCar.populate('owner', 'name email role');
+    
+    // Populate owner details
+    await newCar.populate('owner', 'name email role phone');
 
-    // Send email notifications
+    // Send email notifications asynchronously (don't await)
     if (status === 'approved') {
-      await sendCarApprovedEmail(newCar, req.user).catch(console.error);
+      sendCarApprovedEmail(newCar, req.user)
+        .then(() => console.log(`[CREATE-CAR] Approval email sent for car: ${newCar._id}`))
+        .catch(error => console.error(`[CREATE-CAR] Failed to send approval email:`, error));
     } else {
-      await sendNewCarSubmittedEmail(newCar, req.user).catch(console.error);
+      sendNewCarSubmittedEmail(newCar, req.user)
+        .then(() => console.log(`[CREATE-CAR] Submission email sent for car: ${newCar._id}`))
+        .catch(error => console.error(`[CREATE-CAR] Failed to send submission email:`, error));
+      
+      // Optional: Notify admins about new pending car
+      notifyAdminsAboutPendingCar(newCar)
+        .catch(error => console.error(`[CREATE-CAR] Failed to notify admins:`, error));
     }
 
-    console.log(`[CREATE-CAR] Success - Car created: ${newCar._id} (Status: ${status})`);
+    console.log(`[CREATE-CAR] Success - Car created: ${newCar._id} (Status: ${status}) by user: ${req.user._id}`);
+    
     res.status(201).json({
+      success: true,
       message: `Car listing ${status === 'approved' ? 'created and approved' : 'created successfully and pending approval'}`,
-      car: newCar
+      car: newCar,
+      carId: newCar._id
     });
+
   } catch (error) {
-    console.log(`[CREATE-CAR] Error:`, error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`[CREATE-CAR] System Error:`, error);
+    
+    // Handle specific MongoDB errors
+    if (error.name === 'ValidationError') {
+      const errors = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({
+        error: "Validation failed",
+        details: errors
+      });
+    }
+    
+    if (error.code === 11000) {
+      return res.status(400).json({
+        error: "Car with similar details already exists"
+      });
+    }
+
+    // Generic error response
+    res.status(500).json({ 
+      error: "Internal Server Error",
+      ...(process.env.NODE_ENV === 'development' && { stack: error.stack })
+    });
   }
 };
+
+// Optional helper function to notify admins
+async function notifyAdminsAboutPendingCar(car) {
+  // Implementation to notify admins about new pending car
+  // This could be another email service or notification system
+  console.log(`[NOTIFY-ADMINS] New pending car: ${car._id}`);
+}
 
 // Get all cars (admin only - includes pending and approved)
 export const getAllCars = async (req, res) => {
