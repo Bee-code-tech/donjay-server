@@ -1,4 +1,4 @@
-import cookieParser from "cookie-parser";
+mport cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
@@ -23,42 +23,50 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 
-// Configure CORS test
+// Allowed origins
 const allowedOrigins = [
-  "http://localhost:3000", 
+  "http://localhost:3000",
   "https://donjayautoswebsite.netlify.app",
   "https://donjaysite.vercel.app"
 ];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (allowedOrigins.includes(origin) || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
-
+// preflight handling
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', 'true');
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS"
+    );
+  }
+ 
+ 
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
   next();
 });
 
-// Define routes
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/cars", carRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/deals", dealRoutes);
 app.use("/api/inspections", inspectionRoutes);
-// Root endpoint
+
+
 app.use("/", (req, res) =>
   res.status(200).json({ success: true, msg: "Car Listing Server is running" })
 );
 
 server.listen(PORT, () => {
-  console.log(`Server Running on port ${PORT}`);
+  console.log(Server Running on port ${PORT});
 });
+  
