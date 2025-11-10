@@ -23,7 +23,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 
-// Configure CORS
+// Configure CORS test
 const allowedOrigins = [
   "http://localhost:3000", 
   "https://donjayautoswebsite.netlify.app",
