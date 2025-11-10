@@ -1,4 +1,4 @@
-mport cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
@@ -67,6 +67,5 @@ app.use("/", (req, res) =>
 );
 
 server.listen(PORT, () => {
-  console.log(Server Running on port ${PORT});
+  console.log(`Server Running on port ${PORT}`);
 });
-  
