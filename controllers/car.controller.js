@@ -17,7 +17,8 @@ export const createCar = async (req, res) => {
       mileage,
       price,
       note,
-      images
+      images,
+      isSwap
     } = req.body;
 
     // Validation
@@ -43,6 +44,7 @@ export const createCar = async (req, res) => {
       price,
       note,
       images,
+      isSwap: isSwap || false,
       status,
       owner: req.user._id,
       approvedBy,
@@ -244,6 +246,11 @@ export const updateCar = async (req, res) => {
       updates.status = 'pending';
       updates.approvedBy = undefined;
       updates.approvedAt = undefined;
+    }
+
+    // Handle isSwap field
+    if (req.body.isSwap !== undefined) {
+      updates.isSwap = req.body.isSwap;
     }
 
     const updatedCar = await Car.findByIdAndUpdate(
