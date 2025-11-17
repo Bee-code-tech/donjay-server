@@ -85,6 +85,10 @@ const carSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    isSwap: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
