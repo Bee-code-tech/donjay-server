@@ -63,7 +63,7 @@ export const createCar = async (req, res) => {
 
     console.log(`[CREATE-CAR] Success - Car created: ${newCar._id} (Status: ${status})`);
     res.status(201).json({
-      message: `Car listing ${status === 'approved' ? 'created and approved' : 'created successfully and pending approval'}`,
+      message: `Car listing ${status === 'approved' ? 'created and approved' : 'created successfully and pending approvals'}`,
       car: newCar
     });
   } catch (error) {
