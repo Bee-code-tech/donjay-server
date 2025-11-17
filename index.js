@@ -27,7 +27,9 @@ app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:3000",
   "https://donjayautoswebsite.netlify.app",
-  "https://donjaysite.vercel.app"
+  "https://donjaysite-xi.vercel.app/"
+  // "https://donjaysite.vercel.app"
+  
 ];
 
 // preflight handling
