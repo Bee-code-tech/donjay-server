@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isSuspended: {
+      type: Boolean,
+      default: false,
+    },
     otp: {
       type: String,
     },
@@ -45,7 +49,6 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
 // Create explicit index on name field
 userSchema.index({ name: 1 }, { unique: true, name: 'name_1' });
 

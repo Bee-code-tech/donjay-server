@@ -10,9 +10,10 @@ import carRoutes from "./routes/car.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import dealRoutes from "./routes/deal.routes.js";
 import inspectionRoutes from "./routes/inspection.routes.js";
+import userRoutes from "./routes/users.routes.js";
+import inviteRoutes from "./routes/invite.routes.js";
 import { app, server } from "./socket/socket.js";
-
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5050;
 app.use("/uploads", express.static("uploads"));
 const __dirname = path.resolve();
 dotenv.config();
@@ -62,8 +63,8 @@ app.use("/api/cars", carRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/deals", dealRoutes);
 app.use("/api/inspections", inspectionRoutes);
-
-
+app.use("/api/users", userRoutes);
+app.use("/api/invite", inviteRoutes);
 app.use("/", (req, res) =>
   res.status(200).json({ success: true, msg: "Car Listing Server is running" })
 );

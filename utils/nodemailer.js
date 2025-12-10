@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport({
   socketTimeout: 10000,
 });
 
-// Test connection on startup
+// Test connection on startup 
 transporter.verify((error, success) => {
   if (error) {
     console.log('[EMAIL] SMTP Connection Error:', error.message);
@@ -32,25 +32,38 @@ transporter.verify((error, success) => {
   }
 });
 
-export const sendOTPEmail = async (email, otp) => {
+export const sendOTPEmail = async (email, content, subject) => {
   try {
+    // Handle case where subject is not provided (older usage)
+    const emailSubject = subject || "Your OTP Code";
+    
     const mailOptions = {
       from: process.env.GMAIL_USER,
       to: email,
-      subject: "Your OTP Code",
-      text: `Your OTP code is ${otp}. It is valid for 10 minutes.`,
+      subject: emailSubject,
+      text: typeof content === 'string' && emailSubject !== "Your OTP Code" 
+        ? content 
+        : `Your OTP code is ${content}. It is valid for 10 minutes.`,
+      html: typeof content === 'string' && content.includes('<') 
+        ? content 
+        : undefined
     };
 
-    console.log(`[EMAIL] Sending OTP to ${email}`);
+    // If subject is the default OTP subject and content is a simple string, treat as OTP
+    if (emailSubject === "Your OTP Code" && typeof content === 'string' && !content.includes('<')) {
+      mailOptions.text = `Your OTP code is ${content}. It is valid for 10 minutes.`;
+      mailOptions.html = undefined;
+    }
+
+    console.log(`[EMAIL] Sending email to ${email}`);
     const result = await transporter.sendMail(mailOptions);
-    console.log(`[EMAIL] OTP sent successfully to ${email}`);
+    console.log(`[EMAIL] Email sent successfully to ${email}`);
     return result;
   } catch (error) {
-    console.log(`[EMAIL] Failed to send OTP to ${email}:`, error.message);
+    console.log(`[EMAIL] Failed to send email to ${email}:`, error.message);
     throw error;
   }
 };
-
 
 export const sendResetPasswordEmail = async (email, resetUrl) => {
   try {

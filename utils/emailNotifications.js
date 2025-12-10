@@ -27,7 +27,6 @@ const sendEmail = async (to, subject, html) => {
     throw error;
   }
 };
-
 // Car notification functions
 export const sendCarApprovedEmail = async (car, owner) => {
   try {
