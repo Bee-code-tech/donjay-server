@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 
-// Get all users (admin only)  still 
+// Get all users (admin only)  
 export const getAllUsers = async (req, res) => {
   try {
     console.log(`[GET-ALL-USERS] Request from admin: ${req.user._id}`);
