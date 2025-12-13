@@ -1,0 +1,776 @@
+{
+	"info": {
+		"_postman_id": "dae2c6b5-a6b6-4a65-8302-ea933f526fa7",
+		"name": "Donjay",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48256743"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"testuser129300\",\n  \"email\": \"3uqcwyk1y5@wyoxafp.com\",\n  \"password\": \"password123\",\n  \"confirmPassword\": \"password123\",\n  \"phoneNumber\": \"+1234567890\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_URL}}/auth/signup",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify_otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"3uqcwyk1y5@wyoxafp.com\",\n  \"otp\": \"672113\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_URL}}/auth/verify-otp",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"auth",
+								"verify-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"3uqcwyk1y5@wyoxafp.com\",\n  \"password\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_URL}}/auth/login",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot_password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"3uqcwyk1y5@wyoxafp.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_URL}}/auth/forgot-password",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newPassword\": \"Temidayo82@\",\n  \"confirmPassword\": \"Temidayo82@\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_URL}}/auth/reset-password?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGQ5ZjlhMmE5NzAyZDdjZWQyMTc4YjUiLCJpYXQiOjE3NTkxMTYxMzQsImV4cCI6MTc1OTExOTczNH0.aveveoXHW4M8e4cY8bC80T0y7Dxf0rR9vMa2X_NC0r4",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"auth",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGQ5ZjlhMmE5NzAyZDdjZWQyMTc4YjUiLCJpYXQiOjE3NTkxMTYxMzQsImV4cCI6MTc1OTExOTczNH0.aveveoXHW4M8e4cY8bC80T0y7Dxf0rR9vMa2X_NC0r4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication folder for register, signup, login, verify otp and the likes"
+		},
+		{
+			"name": "cars",
+			"item": [
+				{
+					"name": "createCar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTE3NjI3OTM1ZGIyNmM3MWYyODA5NjUiLCJpYXQiOjE3NjMxNDAyNDAsImV4cCI6MTc2NDQzNjI0MH0.a_0iI2vlEEcH3hrvy-4UIPZsWUIY-NnzKHVILbB-I6Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carName\": \"Toyota Clamry2800009900\",\n  \"year\": 2022,\n  \"condition\": \"used\",\n  \"transmission\": \"automatic\",\n  \"fuelType\": \"hybrid\",\n  \"engine\": \"2.5L 4-Cylinder Hybrid\",\n  \"mileage\": 15000,\n  \"price\": 28500,\n  \"note\": \"Excellent condition, single owner, full service history\",\n  \"images\": [\n    \"https://example.com/car1.jpg\",\n    \"https://example.com/car2.jpg\"\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_URL}}/cars",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getApprovedCars",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQ5ZmRhODY2MzdhZDBjN2JmN2U2MjEiLCJpYXQiOjE3NTkxMTc0NTQsImV4cCI6MTc2MDQxMzQ1NH0.YADT42D06Yrg3RwPyw5RT1kYvC7LwNQv5szVZFbbdKA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carName\": \"Toyota Camry2\",\n  \"year\": 2022,\n  \"condition\": \"used\",\n  \"transmission\": \"automatic\",\n  \"fuelType\": \"hybrid\",\n  \"engine\": \"2.5L 4-Cylinder Hybrid\",\n  \"mileage\": 15000,\n  \"price\": 28500,\n  \"note\": \"Excellent condition, single owner, full service history\",\n  \"images\": [\n    \"https://example.com/car1.jpg\",\n    \"https://example.com/car2.jpg\"\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{_URL}}/cars/approved",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"cars",
+								"approved"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleCar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQ5ZmRhODY2MzdhZDBjN2JmN2U2MjEiLCJpYXQiOjE3NTkxMTc0NTQsImV4cCI6MTc2MDQxMzQ1NH0.YADT42D06Yrg3RwPyw5RT1kYvC7LwNQv5szVZFbbdKA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carName\": \"Toyota Camry2\",\n  \"year\": 2022,\n  \"condition\": \"used\",\n  \"transmission\": \"automatic\",\n  \"fuelType\": \"hybrid\",\n  \"engine\": \"2.5L 4-Cylinder Hybrid\",\n  \"mileage\": 15000,\n  \"price\": 28500,\n  \"note\": \"Excellent condition, single owner, full service history\",\n  \"images\": [\n    \"https://example.com/car1.jpg\",\n    \"https://example.com/car2.jpg\"\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{_URL}}/cars/68da00d65c5343ebdccc2df4",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"cars",
+								"68da00d65c5343ebdccc2df4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMyCars",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQ5ZmRhODY2MzdhZDBjN2JmN2U2MjEiLCJpYXQiOjE3NTkxMTc0NTQsImV4cCI6MTc2MDQxMzQ1NH0.YADT42D06Yrg3RwPyw5RT1kYvC7LwNQv5szVZFbbdKA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carName\": \"Toyota Camry2\",\n  \"year\": 2022,\n  \"condition\": \"used\",\n  \"transmission\": \"automatic\",\n  \"fuelType\": \"hybrid\",\n  \"engine\": \"2.5L 4-Cylinder Hybrid\",\n  \"mileage\": 15000,\n  \"price\": 28500,\n  \"note\": \"Excellent condition, single owner, full service history\",\n  \"images\": [\n    \"https://example.com/car1.jpg\",\n    \"https://example.com/car2.jpg\"\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{_URL}}/cars/user/my-cars",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"cars",
+								"user",
+								"my-cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQ5ZmRhODY2MzdhZDBjN2JmN2U2MjEiLCJpYXQiOjE3NTkxMTc0NTQsImV4cCI6MTc2MDQxMzQ1NH0.YADT42D06Yrg3RwPyw5RT1kYvC7LwNQv5szVZFbbdKA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carName\": \"Toyota Camry2\",\n  \"year\": 2025,\n  \"condition\": \"used\",\n  \"transmission\": \"automatic\",\n  \"fuelType\": \"hybrid\",\n  \"engine\": \"2.5L 4-Cylinder Hybrid\",\n  \"mileage\": 15000,\n  \"price\": 28500,\n  \"note\": \"Excellent condition, single owner, full service history\",\n  \"images\": [\n    \"https://example.com/car1.jpg\",\n    \"https://example.com/car2.jpg\"\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_URL}}/cars/68da00d65c5343ebdccc2df4",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"cars",
+								"68da00d65c5343ebdccc2df4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllCars(Admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQ5ZmRhODY2MzdhZDBjN2JmN2U2MjEiLCJpYXQiOjE3NTkxMTc0NTQsImV4cCI6MTc2MDQxMzQ1NH0.YADT42D06Yrg3RwPyw5RT1kYvC7LwNQv5szVZFbbdKA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carName\": \"Toyota Camry2\",\n  \"year\": 2022,\n  \"condition\": \"used\",\n  \"transmission\": \"automatic\",\n  \"fuelType\": \"hybrid\",\n  \"engine\": \"2.5L 4-Cylinder Hybrid\",\n  \"mileage\": 15000,\n  \"price\": 28500,\n  \"note\": \"Excellent condition, single owner, full service history\",\n  \"images\": [\n    \"https://example.com/car1.jpg\",\n    \"https://example.com/car2.jpg\"\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{_URL}}/cars/admin/all",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"cars",
+								"admin",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approveCar(Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQ5ZmRhODY2MzdhZDBjN2JmN2U2MjEiLCJpYXQiOjE3NTkxMTc0NTQsImV4cCI6MTc2MDQxMzQ1NH0.YADT42D06Yrg3RwPyw5RT1kYvC7LwNQv5szVZFbbdKA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carName\": \"Toyota Camry2\",\n  \"year\": 2025,\n  \"condition\": \"used\",\n  \"transmission\": \"automatic\",\n  \"fuelType\": \"hybrid\",\n  \"engine\": \"2.5L 4-Cylinder Hybrid\",\n  \"mileage\": 15000,\n  \"price\": 28500,\n  \"note\": \"Excellent condition, single owner, full service history\",\n  \"images\": [\n    \"https://example.com/car1.jpg\",\n    \"https://example.com/car2.jpg\"\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{_URL}}/cars/admin/68da00d65c5343ebdccc2df4/approve",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"cars",
+								"admin",
+								"68da00d65c5343ebdccc2df4",
+								"approve"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rejectCar(Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQ5ZmRhODY2MzdhZDBjN2JmN2U2MjEiLCJpYXQiOjE3NTkxMTc0NTQsImV4cCI6MTc2MDQxMzQ1NH0.YADT42D06Yrg3RwPyw5RT1kYvC7LwNQv5szVZFbbdKA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"string (optional)\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_URL}}/cars/admin/68da00d65c5343ebdccc2df4/reject",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"cars",
+								"admin",
+								"68da00d65c5343ebdccc2df4",
+								"reject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQ5ZmRhODY2MzdhZDBjN2JmN2U2MjEiLCJpYXQiOjE3NTkxMTc0NTQsImV4cCI6MTc2MDQxMzQ1NH0.YADT42D06Yrg3RwPyw5RT1kYvC7LwNQv5szVZFbbdKA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"string (optional)\"\n}"
+						},
+						"url": {
+							"raw": "{{_URL}}/cars/68da00d65c5343ebdccc2df4",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"cars",
+								"68da00d65c5343ebdccc2df4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "deals",
+			"item": [
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "getAllDeals",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "approveDeal",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "createDeal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dealType\": \"sell\",\n  \"primaryCarId\": \"691128fb752ba18da0af1cf0\",\n  \"secondaryCarId\": \"\",\n  \"offerPrice\": \"700000\",\n  \"additionalAmount\": \"70000\",\n  \"customerNote\": \"string (optional, max 1000 chars)\",\n  \"customerContact\": {\n    \"phone\": \"string (required)\",\n    \"email\": \"string (required)\", \n    \"preferredContactMethod\": \"email\"\n  },\n  \"priority\": \"medium\",\n  \"tags\": [\"string array (optional)\"],\n  \"expiresAt\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_URL}}/deals",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"deals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMyDeals",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "updateMyDeal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTE3NWMxNDM1ZGIyNmM3MWYyODA5MDYiLCJpYXQiOjE3NjMxMzg2MjYsImV4cCI6MTc2NDQzNDYyNn0.DMBnHiiDze5pzMadwmfwyyFh7zWLsfxzxhM1QydXqKE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"offerPrice\": 24000,\n  \"additionalAmount\": 1000,\n  \"customerNote\": \"Updated offer\",\n  \"priority\": \"high\",\n  \"tags\": [\"urgent\", \"negotiable\"],\n  \"expiresAt\": \"2024-02-01T00:00:00.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_URL}}/deals/69175cf835db26c71f28091c",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"deals",
+								"69175cf835db26c71f28091c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "invite",
+			"item": [
+				{
+					"name": "inviteAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"biopicinfo@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{_URL}}/invite",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"invite"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "getUsers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{_URL}}/users",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleUser",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "suspend/UnsuspendUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{_URL}}/users/{{id}}/suspend",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"users",
+								"{{id}}",
+								"suspend"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{_URL}}/users/{{id}}",
+							"host": [
+								"{{_URL}}"
+							],
+							"path": [
+								"users",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": ""
+		},
+		{
+			"key": "_URL",
+			"value": ""
+		},
+		{
+			"key": "TOKEN",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "id",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

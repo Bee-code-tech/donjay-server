@@ -119,9 +119,9 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
-# Gmail Configuration
-GMAIL_USER=your_gmail_address
-GMAIL_PASS=your_gmail_app_password
+# Brevo (Sendinblue) API Configuration
+BREVO_API_KEY=your_brevo_api_key
+BREVO_SENDER_EMAIL=your_verified_sender_email@donjayautos.com
 ```
 
 ## API Endpoints Overview

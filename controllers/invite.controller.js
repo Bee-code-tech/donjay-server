@@ -2,10 +2,11 @@ import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 import { sendOTPEmail } from "../utils/nodemailer.js";
 
-// Generate username from email
+// Generate username from email - FIXED VERSION
 const generateUsername = (email) => {
-  const domain = email.split('@')[1].split('.')[0];
-  return `admin@${domain}`;
+  // Extract the part before @ symbol
+  const usernamePart = email.split('@')[0];
+  return `admin@${usernamePart}`;
 };
 
 // Invite new admin user
