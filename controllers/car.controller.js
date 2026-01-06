@@ -9,6 +9,7 @@ export const createCar = async (req, res) => {
 
     const {
       carName,
+      carModel,
       year,
       condition,
       transmission,
@@ -22,7 +23,7 @@ export const createCar = async (req, res) => {
     } = req.body;
 
     // Validation
-    if (!carName || !year || !condition || !transmission || !fuelType || !engine || mileage === undefined || !price || !images?.length) {
+    if (!carName || !carModel || !year || !condition || !transmission || !fuelType || !engine || mileage === undefined || !price || !images?.length) {
       return res.status(400).json({
         error: "Missing required fields: carName, year, condition, transmission, fuelType, engine, mileage, price, and at least one image"
       });
@@ -35,6 +36,7 @@ export const createCar = async (req, res) => {
 
     const newCar = new Car({
       carName,
+      carModel,
       year,
       condition,
       transmission,

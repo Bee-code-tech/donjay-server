@@ -59,10 +59,12 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Try to send email first with timeout
-    const emailPromise = sendOTPEmail(email, otp, "Your OTP Code");
+    const emailPromise = sendOTPEmail(email, otp);
     const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error("Email timeout")), 15000)
-    );    try {
+    );
+
+    try {
       await Promise.race([emailPromise, timeoutPromise]);
       console.log(`[SIGNUP] OTP sent successfully to ${email}`);
 
@@ -160,11 +162,6 @@ export const login = async (req, res) => {
       return res.status(400).json({ error: "Invalid email or password" });
     }
 
-    // Check if user is suspended
-    if (user.isSuspended) {
-      return res.status(403).json({ error: "Account is suspended. Please contact administrator." });
-    }
-
     const token = generateTokenAndSetCookie(user._id);
 
     console.log(`[LOGIN] Success - User logged in: ${user._id}`);
@@ -183,6 +180,7 @@ export const login = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 export const updatePass = async (req, res) => {
   try {
     console.log(`[UPDATE-PASS] Request from user: ${req.user._id}`);
