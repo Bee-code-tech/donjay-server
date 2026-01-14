@@ -209,6 +209,33 @@ export const sendNewMessageEmail = async (sender, recipient, messageContent) => 
   }
 };
 
+// Contact form notification function
+export const sendContactFormEmail = async (fullName, email, subject, message) => {
+  try {
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #FF9800;">New Contact Form Submission</h2>
+        <p>You have received a new message from your website contact form:</p>
+        <ul>
+          <li><strong>Name:</strong> ${fullName}</li>
+          <li><strong>Email:</strong> ${email}</li>
+          <li><strong>Subject:</strong> ${subject}</li>
+          <li><strong>Message:</strong> ${message}</li>
+        </ul>
+        <p>Please respond to the customer as soon as possible.</p>
+        <p>Website Contact System</p>
+      </div>
+    `;
+    
+    const result = await sendEmail('Lawalemma24@gmail.com', subject, htmlContent);
+    console.log(`[EMAIL] Contact form email sent successfully from ${email} with subject: ${subject}`);
+    return result;
+  } catch (error) {
+    console.log(`[EMAIL] Contact form email failed: ${error.message}`);
+    throw error;
+  }
+};
+
 // Utility function to get user by ID with email
 export const getUserWithEmail = async (userId) => {
   return await User.findById(userId).select('name email');
