@@ -100,6 +100,65 @@ export const suspendUser = async (req, res) => {
   }
 };
 
+// Update single user (admin only)
+export const updateUser = async (req, res) => {
+  try {
+    console.log(`[UPDATE-USER] Request to update user: ${req.params.id}`);
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const { name, email, role, phoneNumber, address, isVerified, isSuspended } = req.body;
+
+    // Update fields if provided
+    if (name !== undefined) user.name = name;
+    if (email !== undefined) {
+      // Check if email is already taken by another user
+      const existingUser = await User.findOne({ email, _id: { $ne: user._id } });
+      if (existingUser) {
+        return res.status(400).json({ error: "Email already exists" });
+      }
+      user.email = email;
+    }
+    if (role !== undefined && role !== user.role) {
+      // Only admin can change roles
+      if (req.user.role !== 'admin') {
+        return res.status(403).json({ error: "Access denied. Only admins can change roles" });
+      }
+      user.role = role;
+    }
+    if (phoneNumber !== undefined) user.phoneNumber = phoneNumber;
+    if (address !== undefined) user.address = address;
+    if (isVerified !== undefined) user.isVerified = isVerified;
+    if (isSuspended !== undefined) user.isSuspended = isSuspended;
+
+    await user.save();
+
+    console.log(`[UPDATE-USER] Success - User updated: ${user._id}`);
+    res.status(200).json({ 
+      message: "User updated successfully",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+        isVerified: user.isVerified,
+        isSuspended: user.isSuspended,
+        profilePic: user.profilePic,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
+      }
+    });
+  } catch (error) {
+    console.log(`[UPDATE-USER] Error:`, error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 // Delete single user (admin only)
 export const deleteUser = async (req, res) => {
   try {

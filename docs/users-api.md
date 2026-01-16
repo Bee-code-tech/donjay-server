@@ -91,7 +91,61 @@ Retrieve details of a specific user by ID.
 
 ---
 
-### 3. Suspend/Unsuspend User
+### 3. Update User
+**PUT** `/:id`
+
+Update details of a specific user by ID. Only admins can update users and change roles.
+
+#### Path Parameters
+- `id`: The user ID
+
+#### Request Body
+| Field | Type | Optional | Description |
+|-------|------|----------|-------------|
+| name | String | Yes | User's full name |
+| email | String | Yes | User's email address (must be unique) |
+| role | String | Yes | User's role ('customer' or 'admin') |
+| phoneNumber | String | Yes | User's phone number |
+| address | String | Yes | User's address |
+| isVerified | Boolean | Yes | Verification status |
+| isSuspended | Boolean | Yes | Suspension status |
+
+#### Example Request
+```json
+{
+  "name": "Updated Name",
+  "email": "updated@email.com",
+  "role": "admin",
+  "phoneNumber": "+1234567890",
+  "address": "Updated Address",
+  "isVerified": true,
+  "isSuspended": false
+}
+```
+
+#### Response
+```json
+{
+  "message": "User updated successfully",
+  "user": {
+    "_id": "user_id",
+    "name": "Updated Name",
+    "email": "updated@email.com",
+    "role": "admin",
+    "profilePic": "profile_pic_url",
+    "phoneNumber": "+1234567890",
+    "address": "Updated Address",
+    "isVerified": true,
+    "isSuspended": false,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-02T00:00:00.000Z"
+  }
+}
+```
+
+---
+
+### 4. Suspend/Unsuspend User
 **PUT** `/:id/suspend`
 
 Toggle the suspension status of a user. Suspended users cannot log in to the platform.
@@ -115,7 +169,7 @@ Toggle the suspension status of a user. Suspended users cannot log in to the pla
 
 ---
 
-### 4. Delete User
+### 5. Delete User
 **DELETE** `/:id`
 
 Permanently delete a user account.
