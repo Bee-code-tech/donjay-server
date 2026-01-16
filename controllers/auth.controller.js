@@ -33,14 +33,8 @@ export const signup = async (req, res) => {
         .status(400)
         .json({
           error:
-            "Name must be at least 5 characters and less than 8 characters",
+            "Name must be at least 5 characters",
         });
-    }
-
-    const userExists = await User.findOne({ name });
-
-    if (userExists) {
-      return res.status(400).json({ error: "Name already exists" });
     }
 
     const emailExists = await User.findOne({ email });

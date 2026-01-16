@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
       index: true,
     },
     password: {
@@ -49,8 +48,8 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-// Create explicit index on name field
-userSchema.index({ name: 1 }, { unique: true, name: 'name_1' });
+// Create index on name field
+userSchema.index({ name: 1 }, { name: 'name_1' });
 
 const User = mongoose.model("User", userSchema);
 
