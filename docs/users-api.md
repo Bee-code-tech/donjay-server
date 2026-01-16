@@ -94,7 +94,7 @@ Retrieve details of a specific user by ID.
 ### 3. Update User
 **PUT** `/:id`
 
-Update details of a specific user by ID. Only admins can update users and change roles.
+Update details of a specific user by ID. Users can update their own profiles, and admins can update any user's profile.
 
 #### Path Parameters
 - `id`: The user ID
@@ -104,22 +104,19 @@ Update details of a specific user by ID. Only admins can update users and change
 |-------|------|----------|-------------|
 | name | String | Yes | User's full name |
 | email | String | Yes | User's email address (must be unique) |
-| role | String | Yes | User's role ('customer' or 'admin') |
+| role | String | Yes | User's role ('customer' or 'admin') - Only admins can change roles |
 | phoneNumber | String | Yes | User's phone number |
 | address | String | Yes | User's address |
-| isVerified | Boolean | Yes | Verification status |
-| isSuspended | Boolean | Yes | Suspension status |
+| isVerified | Boolean | Yes | Verification status - Only admins can update |
+| isSuspended | Boolean | Yes | Suspension status - Only admins can update |
 
 #### Example Request
 ```json
 {
   "name": "Updated Name",
   "email": "updated@email.com",
-  "role": "admin",
   "phoneNumber": "+1234567890",
-  "address": "Updated Address",
-  "isVerified": true,
-  "isSuspended": false
+  "address": "Updated Address"
 }
 ```
 
@@ -131,17 +128,21 @@ Update details of a specific user by ID. Only admins can update users and change
     "_id": "user_id",
     "name": "Updated Name",
     "email": "updated@email.com",
-    "role": "admin",
+    "role": "customer",
     "profilePic": "profile_pic_url",
     "phoneNumber": "+1234567890",
     "address": "Updated Address",
-    "isVerified": true,
+    "isVerified": false,
     "isSuspended": false,
     "createdAt": "2024-01-01T00:00:00.000Z",
     "updatedAt": "2024-01-02T00:00:00.000Z"
   }
 }
 ```
+
+#### Access Control
+- Regular users can only update their own profile
+- Admins can update any user's profile and have additional permissions to modify role, verification, and suspension status
 
 ---
 

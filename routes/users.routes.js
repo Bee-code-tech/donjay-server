@@ -13,14 +13,11 @@ const router = express.Router();
 // Apply authentication middleware to all routes
 router.use(protectRoute);
 
-// Admin-only routes
-router.use(adminOnly);
-
 // Routes
-router.get("/", getAllUsers);
+router.get("/", adminOnly, getAllUsers);
 router.get("/:id", getUserById);
-router.put("/:id", updateUser);
-router.put("/:id/suspend", suspendUser);
-router.delete("/:id", deleteUser);
+router.put("/:id", updateUser); // Users can update their own profile, admins can update any profile
+router.put("/:id/suspend", adminOnly, suspendUser); // Admin only
+router.delete("/:id", adminOnly, deleteUser); // Admin only
 
 export default router;

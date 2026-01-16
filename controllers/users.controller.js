@@ -100,14 +100,22 @@ export const suspendUser = async (req, res) => {
   }
 };
 
-// Update single user (admin only)
+// Update single user (users can update themselves, admins can update any user)
 export const updateUser = async (req, res) => {
   try {
-    console.log(`[UPDATE-USER] Request to update user: ${req.params.id}`);
+    console.log(`[UPDATE-USER] Request to update user: ${req.params.id} by user: ${req.user._id}`);
 
     const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
+    }
+
+    // Check if the requesting user is the same as the user being updated or if they're an admin
+    const isUserSelf = req.user._id.toString() === req.params.id;
+    const isAdmin = req.user.role === 'admin';
+    
+    if (!isUserSelf && !isAdmin) {
+      return res.status(403).json({ error: "Access denied. You can only update your own profile." });
     }
 
     const { name, email, role, phoneNumber, address, isVerified, isSuspended } = req.body;
@@ -124,15 +132,15 @@ export const updateUser = async (req, res) => {
     }
     if (role !== undefined && role !== user.role) {
       // Only admin can change roles
-      if (req.user.role !== 'admin') {
+      if (!isAdmin) {
         return res.status(403).json({ error: "Access denied. Only admins can change roles" });
       }
       user.role = role;
     }
     if (phoneNumber !== undefined) user.phoneNumber = phoneNumber;
     if (address !== undefined) user.address = address;
-    if (isVerified !== undefined) user.isVerified = isVerified;
-    if (isSuspended !== undefined) user.isSuspended = isSuspended;
+    if (isVerified !== undefined && isAdmin) user.isVerified = isVerified; // Only admin can update verification status
+    if (isSuspended !== undefined && isAdmin) user.isSuspended = isSuspended; // Only admin can update suspension status
 
     await user.save();
 
