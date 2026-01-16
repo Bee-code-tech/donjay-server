@@ -21,7 +21,7 @@ const carSchema = new mongoose.Schema(
     condition: {
       type: String,
       required: true,
-      enum: ["new", "used", "certified pre-owned"],
+      enum: ["preowned", "brand_new", "foreign_used"],
     },
     transmission: {
       type: String,
