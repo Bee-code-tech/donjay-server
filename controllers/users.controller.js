@@ -118,11 +118,11 @@ export const updateUser = async (req, res) => {
       return res.status(403).json({ error: "Access denied. You can only update your own profile." });
     }
 
-    const { name, email, role, phoneNumber, address, isVerified, isSuspended } = req.body;
+    const { name, email, role, phoneNumber, address, isVerified, isSuspended, profilePic } = req.body;
 
     // Update fields if provided
     if (name !== undefined) user.name = name;
-    if (email !== undefined) {
+    if (email !== undefined && email !== user.email) {  // Only validate if email is actually changing
       // Check if email is already taken by another user
       const existingUser = await User.findOne({ email, _id: { $ne: user._id } });
       if (existingUser) {
@@ -139,6 +139,7 @@ export const updateUser = async (req, res) => {
     }
     if (phoneNumber !== undefined) user.phoneNumber = phoneNumber;
     if (address !== undefined) user.address = address;
+    if (profilePic !== undefined) user.profilePic = profilePic;
     if (isVerified !== undefined && isAdmin) user.isVerified = isVerified; // Only admin can update verification status
     if (isSuspended !== undefined && isAdmin) user.isSuspended = isSuspended; // Only admin can update suspension status
 
