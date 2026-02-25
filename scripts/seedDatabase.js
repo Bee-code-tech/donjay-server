@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import User from "../models/user.model.js";
 import Car from "../models/car.model.js";
+import { TimeSlot } from "../models/inspection.model.js";
 
 dotenv.config();
 
@@ -552,6 +553,34 @@ const seedCars = async () => {
   }
 };
 
+const seedTimeSlots = async () => {
+  try {
+    console.log("📅 Seeding time slots...");
+    
+    // Seed slots for the next 7 days
+    for (let i = 0; i < 7; i++) {
+      const date = new Date();
+      date.setDate(date.getDate() + i);
+      date.setHours(0, 0, 0, 0);
+      
+      const existingSlots = await TimeSlot.findOne({ date });
+      
+      if (existingSlots) {
+        console.log(`Slots for ${date.toDateString()} already exist, skipping...`);
+        continue;
+      }
+      
+      const dailySlots = TimeSlot.generateDailySlots(date);
+      await TimeSlot.insertMany(dailySlots);
+      console.log(`✅ Created slots for: ${date.toDateString()}`);
+    }
+    
+    console.log("✅ Time slots seeded successfully!");
+  } catch (error) {
+    console.error("❌ Error seeding time slots:", error);
+  }
+};
+
 const seedDatabase = async () => {
   try {
     await connectDB();
@@ -560,6 +589,7 @@ const seedDatabase = async () => {
 
     await seedUsers();
     await seedCars();
+    await seedTimeSlots();
 
     console.log("🎉 Database seeding completed successfully!");
 
@@ -568,12 +598,14 @@ const seedDatabase = async () => {
     const carCount = await Car.countDocuments();
     const approvedCars = await Car.countDocuments({ status: 'approved' });
     const pendingCars = await Car.countDocuments({ status: 'pending' });
+    const slotCount = await TimeSlot.countDocuments();
 
     console.log("\n📊 Database Statistics:");
     console.log(`👥 Total Users: ${userCount}`);
     console.log(`🚗 Total Cars: ${carCount}`);
     console.log(`✅ Approved Cars: ${approvedCars}`);
     console.log(`⏳ Pending Cars: ${pendingCars}`);
+    console.log(`📅 Total Date Records for Slots: ${slotCount}`);
 
   } catch (error) {
     console.error("❌ Seeding failed:", error);

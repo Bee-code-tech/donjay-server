@@ -27,7 +27,8 @@ export const bookInspection = async (req, res) => {
       return res.status(404).json({ error: "Car not found or not approved" });
     }
 
-    const requestedDate = new Date(inspectionDate);
+    const [year, month, day] = inspectionDate.split('-').map(Number);
+    const requestedDate = new Date(year, month - 1, day);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -127,7 +128,8 @@ export const getAvailableSlots = async (req, res) => {
       return res.status(400).json({ error: "Date parameter is required" });
     }
 
-    const requestedDate = new Date(date);
+    const [year, month, day] = date.split('-').map(Number);
+    const requestedDate = new Date(year, month - 1, day);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -306,7 +308,8 @@ export const rescheduleInspection = async (req, res) => {
       return res.status(400).json({ error: "Cannot reschedule completed inspection" });
     }
 
-    const requestedDate = new Date(newDate);
+    const [year, month, day] = newDate.split('-').map(Number);
+    const requestedDate = new Date(year, month - 1, day);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 

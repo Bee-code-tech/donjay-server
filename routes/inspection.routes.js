@@ -18,11 +18,12 @@ router.use(protectRoute);
 
 // Customer routes
 router.post("/book", bookInspection);
+router.get("/slots", getAvailableSlots);
 router.get("/available-slots", getAvailableSlots);
 router.get("/my-inspections", getMyInspections);
-router.get("/:id", getInspectionById);
 router.put("/:id/reschedule", rescheduleInspection);
 router.put("/:id/cancel", cancelInspection);
+router.get("/:id", getInspectionById);
 
 // Admin routes
 router.get("/admin/all", adminOnly, getAllInspections);
