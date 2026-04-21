@@ -19,7 +19,8 @@ export const createDeal = async (req, res) => {
       customerContact,
       priority = "medium",
       tags = [],
-      expiresAt
+      expiresAt,
+      receiptUrl
     } = req.body;
 
     // Validation
@@ -63,9 +64,14 @@ export const createDeal = async (req, res) => {
       return res.status(403).json({ error: "You can only create sell deals for cars you own" });
     }
 
-    // For buy deals, user cannot buy their own car
-    if (dealType === 'buy' && primaryCar.owner.toString() === req.user._id.toString()) {
-      return res.status(400).json({ error: "You cannot create a buy deal for your own car" });
+    // For buy deals, user cannot buy their own car and must provide receiptUrl
+    if (dealType === 'buy') {
+      if (primaryCar.owner.toString() === req.user._id.toString()) {
+        return res.status(400).json({ error: "You cannot create a buy deal for your own car" });
+      }
+      if (!receiptUrl) {
+        return res.status(400).json({ error: "Receipt URL is required for buy deals" });
+      }
     }
 
     const newDeal = new Deal({
@@ -80,6 +86,7 @@ export const createDeal = async (req, res) => {
       priority,
       tags,
       expiresAt: expiresAt ? new Date(expiresAt) : undefined,
+      receiptUrl,
       dealHistory: [{
         action: `Deal created - ${dealType}`,
         performedBy: req.user._id,

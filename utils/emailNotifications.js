@@ -65,7 +65,7 @@ export const sendNewCarSubmittedEmail = async (car, owner) => {
 export const sendDealCreatedEmail = async (deal, customer, car) => {
   try {
     const admins = await User.find({ role: 'admin' }).select('email');
-    const template = dealCreatedTemplate(deal.dealType, car.carName, customer.name);
+    const template = dealCreatedTemplate(deal.dealType, car.carName, customer.name, deal.receiptUrl);
     
     const emailPromises = admins.map(admin => 
       sendEmail(admin.email, template.subject, template.html)

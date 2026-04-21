@@ -107,6 +107,10 @@ const dealSchema = new mongoose.Schema(
     expiresAt: {
       type: Date,
     },
+    receiptUrl: {
+      type: String,
+      trim: true,
+    },
     isActive: {
       type: Boolean,
       default: true,

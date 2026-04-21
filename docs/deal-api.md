@@ -55,12 +55,13 @@ Create a new deal (buy, sell, or swap).
   },
   "priority": "low|medium|high|urgent (optional, default: medium)",
   "tags": ["string array (optional)"],
-  "expiresAt": "ISO date string (optional)"
+  "expiresAt": "ISO date string (optional)",
+  "receiptUrl": "string (required for buy deals)"
 }
 ```
 
 #### Deal Type Rules:
-- **Buy Deal**: `primaryCarId` = car customer wants to buy (cannot be own car)
+- **Buy Deal**: `primaryCarId` = car customer wants to buy (cannot be own car). `receiptUrl` is required.
 - **Sell Deal**: `primaryCarId` = car customer wants to sell (must be own car)
 - **Swap Deal**: `primaryCarId` = car offering, `secondaryCarId` = car wanting
 
@@ -622,6 +623,7 @@ const response = await fetch('/api/deals', {
       email: 'customer@email.com',
       preferredContactMethod: 'both'
     },
+    receiptUrl: 'https://cloudinary.com/path/to/receipt.jpg',
     customerNote: 'Very interested in this car',
     priority: 'high'
   })

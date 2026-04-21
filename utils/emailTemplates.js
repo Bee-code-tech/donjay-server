@@ -43,7 +43,7 @@ export const newCarSubmittedTemplate = (carName, customerName) => ({
 });
 
 // Deal notification templates
-export const dealCreatedTemplate = (dealType, carName, customerName) => ({
+export const dealCreatedTemplate = (dealType, carName, customerName, receiptUrl) => ({
   subject: `🤝 New ${dealType.charAt(0).toUpperCase() + dealType.slice(1)} Deal Created`,
   html: `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -53,6 +53,7 @@ export const dealCreatedTemplate = (dealType, carName, customerName) => ({
         <li><strong>Type:</strong> ${dealType.toUpperCase()}</li>
         <li><strong>Car:</strong> ${carName}</li>
         <li><strong>Customer:</strong> ${customerName}</li>
+        ${receiptUrl ? `<li><strong>Receipt:</strong> <a href="${receiptUrl}">View Receipt</a></li>` : ''}
       </ul>
       <p>Please review and approve/reject the deal.</p>
       <p>Admin Team</p>
